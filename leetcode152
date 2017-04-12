@@ -1,0 +1,20 @@
+public class Solution {
+    public int maxProduct(int[] nums) {
+        int oldmax=nums[0];
+        int oldmin=nums[0];
+        int realmax=nums[0];
+        int newmax,newmin;
+        if(nums.length==0){
+            return 0;
+        }
+        for(int i=1;i<nums.length;i++)
+        {
+            newmax=Math.max(Math.max(oldmax*nums[i],oldmin*nums[i]),nums[i]);
+            newmin=Math.min(Math.min(oldmax*nums[i],oldmin*nums[i]),nums[i]);
+            realmax=Math.max(newmax,realmax);
+            oldmax=newmax;
+            oldmin=newmin;
+        }
+        return realmax;
+    }
+}
