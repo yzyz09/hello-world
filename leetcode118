@@ -1,0 +1,34 @@
+public class Solution {
+     public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> res=new ArrayList<List<Integer>>();
+        ArrayList<Integer> preres;
+        if(numRows==0) return res;
+        if(numRows>0){
+            preres=new ArrayList<Integer>();
+            preres.add(1);
+            res.add(preres);
+        }
+        if(numRows>1){
+            preres=new ArrayList<Integer>();
+            preres.add(1);
+            preres.add(1);
+            res.add(preres);
+        }
+        int j=2;
+        if(numRows>2){
+            while(numRows>j){
+                preres=new ArrayList<Integer>();
+                preres.add(1);
+                List<Integer> prepreres=res.get(j-1);
+                int i;
+                for(i=1 ; i<prepreres.size() ;i++){
+                    preres.add(prepreres.get(i-1)+prepreres.get(i));
+                }
+                preres.add(1);
+                res.add(preres);
+                j++;
+            }
+        }
+        return res;
+    }
+}
