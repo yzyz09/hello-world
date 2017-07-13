@@ -12,7 +12,7 @@ public class Solution {
         ListNode m1 = l1;
         ListNode m2 = l2;
         ListNode result = new ListNode(0);
-        ListNode m3 = sentinel;
+        ListNode m3 = result;
         while(m1 != null || m2 != null)
         {
             int sum=0;
