@@ -1,0 +1,32 @@
+public class Solution {
+    public double findKth(int[] A, int[] B, int k){
+        int m = A.length;
+        int n = B.length;
+        if (m > n)
+            return findKth(B, A, k);
+        if (m == 0)
+            return B[k-1];
+        if (k == 1)
+            return Math.min(A[0], B[0]);
+        int pa = Math.min(k/2, m), pb = k - pa;
+        if (A[pa-1] < B[pb-1]){
+            return findKth(Arrays.copyOfRange(A, pa, m), B, k-pa);
+        }
+        else if (A[pa-1] > B[pb-1]){
+            return findKth(A, Arrays.copyOfRange(B, pb, n), k-pb);
+        }
+        else 
+            return A[pa-1];
+    }
+    public double findMedianSortedArrays(int[] A, int[] B) {
+        int m = A.length;
+        int n = B.length;
+        int total = m+n;
+        if (total%2==1){
+            return findKth(A, B, (total/2)+1);
+        }
+        else{
+            return ((findKth(A, B, total/2)) + findKth(A, B, (total/2)+1))/2;
+        }
+    }
+}
