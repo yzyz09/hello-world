@@ -1,0 +1,32 @@
+public class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String> result = new ArrayList<String>();
+        String[] map = new String[10];
+        map[0] = "0";  
+        map[1] = "1";  
+        map[2] = "abc";  
+        map[3] = "def";  
+        map[4] = "ghi";  
+        map[5] = "jkl";  
+        map[6] = "mno";  
+        map[7] = "pqrs";  
+        map[8] = "tuv";  
+        map[9] = "wxyz";
+        char[] temp = new char[digits.length()];
+        if (digits == null || digits.length() == 0)
+            return new ArrayList<String>();
+        dfs(digits, 0, temp, map, result);
+        return result;
+    }
+    public void dfs(String digits, int index, char[] midTemp, String[] map, List<String> result){
+        if (index == digits.length()){
+            result.add(new String(midTemp));
+            return;
+        }
+        char strChr = digits.charAt(index);
+        for(int i = 0; i < map[strChr - '0'].length(); i++){
+            midTemp[index] = map[strChr - '0'].charAt(i);
+            dfs(digits, index + 1, midTemp, map, result);
+        }
+    }
+}
