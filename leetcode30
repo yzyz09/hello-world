@@ -1,0 +1,62 @@
+class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        if (s == null || s.length() == 0 || words == null || words.length == 0)
+            return result;
+        int strLen = s.length();
+        int wordLen = words[0].length();
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        for (int i = 0; i < words.length; i++){
+            if (map.containsKey(words[i])){
+                map.put(words[i], map.get(words[i]) + 1);
+            }
+            else{
+                map.put(words[i], 1);
+            }
+        }
+        for (int i = 0; i < wordLen; i++){
+            HashMap<String, Integer> curMap = new HashMap<String, Integer>();
+            int count = 0, left = i;
+            for (int j = i; j <= strLen - wordLen; j += wordLen){
+                String curStr = s.substring(j, j + wordLen);
+                if (map.containsKey(curStr)){
+                    if (curMap.containsKey(curStr)){
+                        curMap.put(curStr, curMap.get(curStr) + 1);
+                    }
+                    else{
+                        curMap.put(curStr, 1);
+                    }
+                    if (curMap.get(curStr) <= map.get(curStr)){
+                        count++;
+                    }
+                    else{
+                        while (curMap.get(curStr) > map.get(curStr)){
+                            String temp = s.substring(left, left + wordLen);
+                            if (curMap.containsKey(temp)){
+                                curMap.put(temp, curMap.get(temp) - 1);
+                                if (curMap.get(temp) < map.get(temp)){
+                                    count--;
+                                }
+                            }
+                            left += wordLen;
+                        }
+                    }
+                    if (count == words.length){
+                        result.add(left);
+                        String temp = s.substring(left, left + wordLen);
+                        if(curMap.containsKey(temp))
+                            curMap.put(temp, curMap.get(temp) - 1);
+                        left += wordLen;
+                        count--;
+                    }
+                }
+                else{
+                    curMap.clear();
+                    count = 0;
+                    left = j + wordLen;
+                }
+            }
+        }
+        return result;
+    }
+}
